@@ -8,6 +8,30 @@
 # and validation to ensure a smooth ordering experience.
 
 
+# Nested dictionary stores product categories, item names, and prices.
+# This avoids hardcoding products throughout the program and makes it easy to update.
+sports_inventory = {
+    "Clothing": {
+        "Running Shirt": 30,
+        "Sweatpants": 50,
+        "Compression Shorts": 25
+    },
+
+    "Shoes": {
+        "ASICS Running Shoes": 80,
+        "Nike Casual Shoes": 75,
+        "Adidas Football Boots": 85
+    },
+
+    "Accessories": {
+        "Drippy Sunglasses": 15,
+        "Garmin Watch": 160,
+        "Tuff Socks": 10
+    }
+}
+
+
+
 def get_name():
     """Gets and validates the customer's name."""
    
@@ -31,11 +55,26 @@ def get_name():
 
 
 
+def display_inventory():
+    """Displays all product categories, items and prices."""
+
+    print("\nAvailable Sports Equipment")
+
+    # Loop through each category in the inventory dictionary.
+    for category, products in sports_inventory.items():
+        print(f"\n{category}")
+
+        # Display every product and its price within the selected category.
+        for item, price in products.items():
+            print(f" - {item}: ${price}")
+
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
     customer_name = get_name()
-    print(f"Customer Name: {customer_name}")
+    display_inventory()
 
 
 
