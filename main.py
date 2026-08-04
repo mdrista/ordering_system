@@ -10,6 +10,7 @@
 
 # Nested dictionary stores product categories, item names, and prices.
 # This avoids hardcoding products throughout the program and makes it easy to update.
+
 sports_inventory = {
     "Clothing": {
         "Running Shirt": 30,
@@ -55,26 +56,26 @@ def get_name():
 
 
 
-def display_inventory():
-    """Displays all product categories, items and prices."""
+def display_categories():
+    """Displays all available product categories."""
 
-    print("\nAvailable Sports Equipment")
+    print("\nProduct Categories")
 
-    # Loop through each category in the inventory dictionary.
-    for category, products in sports_inventory.items():
-        print(f"\n{category}")
+    # Display each category stored in the inventory dictionary.
+    for number, category in enumerate(sports_inventory, start=1):
+        print(f"{number}. {category}")
 
-        # Display every product and its price within the selected category.
-        for item, price in products.items():
-            print(f" - {item}: ${price}")
-
+    print("Q. Quit")
 
 
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
     customer_name = get_name()
-    display_inventory()
+
+    shopping_cart = {} #create an empty shopping cart to store items and their quantities
+    
+    display_categories()
 
 
 
