@@ -68,15 +68,34 @@ def display_categories():
     print("Q. Quit")
 
 
+
+def select_category():
+    """Allows the user to select a product category and validates the input."""
+    while True:
+        # Use of derived values (len(sports_inventory)) which prevent hardcoding and makes the program more flexible and robust.
+        category_choice = input(f"Select a category (1-{len(sports_inventory)}) or Q to quit: ").strip().upper()
+
+        # Allow user to quit
+        if category_choice == "Q":
+            return None
+
+        # Validate that input is a number and within the valid range.
+        if category_choice.isdigit() and 1 <= int(category_choice) <= len(sports_inventory):
+            selected_category = list(sports_inventory.keys())[int(category_choice) - 1]
+            return selected_category
+
+        print(f"Error: Please enter a valid number (1-{len(sports_inventory)}) or Q to quit.")
+
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
     customer_name = get_name()
 
-    shopping_cart = {} #create an empty shopping cart to store items and their quantities
-    
+    shopping_cart = {} # Create an empty shopping cart to store items and their quantities.
     display_categories()
-
+    selected_category = select_category()
 
 
 if __name__ == "__main__":
