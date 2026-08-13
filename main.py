@@ -88,6 +88,17 @@ def select_category():
 
 
 
+def display_items(category):
+    """Displays all items in the selected category."""
+
+    print(f"\nItems in {category}:")
+
+    # Display each item and its price from the selected category.
+    for number, (item, price) in enumerate(sports_inventory[category].items(), start=1):
+        print(f"{number}. {item} - ${price}")
+
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -97,6 +108,11 @@ def main():
     display_categories()
     selected_category = select_category()
 
+    if selected_category is None:
+      print("Order cancelled.")
+      return
+
+    display_items(selected_category)
 
 if __name__ == "__main__":
     main()
