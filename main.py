@@ -98,21 +98,56 @@ def display_items(category):
         print(f"{number}. {item} - ${price}")
 
 
+def select_item(category):
+    """Allows the customer to select a product or go back."""
+
+    items = list(sports_inventory[category].items())
+
+    while True:
+        item_choice = input(
+            f"Select an item (1-{len(items)}) or B to go back: "
+        ).strip().upper()
+
+        if item_choice == "B":
+            return None
+
+        if item_choice.isdigit() and 1 <= int(item_choice) <= len(items):
+            item_name, price = items[int(item_choice) - 1]
+            return item_name, price
+
+        print(
+            f"Error: Please enter a number between 1 and {len(items)}, "
+            "or B to go back."
+        )
+
+
 
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
     customer_name = get_name()
 
-    shopping_cart = {} # Create an empty shopping cart to store items and their quantities.
-    display_categories()
-    selected_category = select_category()
+    shopping_cart = {}
 
-    if selected_category is None:
-      print("Order cancelled.")
-      return
+    while True:
+        display_categories()
+        selected_category = select_category()
 
-    display_items(selected_category)
+        # Quit if the customer chooses Q
+        if selected_category is None:
+            print("Order cancelled.")
+            return
+
+        display_items(selected_category)
+        selected_item = select_item(selected_category)
+
+        # Return to the category menu if the customer chooses B
+        if selected_item is None:
+            continue
+
+        item_name, price = selected_item
+        print(f"Selected: {item_name} - ${price}")
+
 
 if __name__ == "__main__":
     main()
