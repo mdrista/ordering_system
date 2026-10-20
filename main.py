@@ -121,6 +121,18 @@ def select_item(category):
         )
 
 
+def get_quantity():
+    """Gets and validates the quantity of an item."""
+
+    while True:
+        quantity = input("Enter quantity: ").strip()
+
+        # Check that the quantity is a positive whole number
+        if quantity.isdigit() and int(quantity) > 0:
+            return int(quantity)
+
+        print("Error: Please enter a positive whole number.")
+
 
 def main():
     """Function to run all other functions in the program."""
@@ -148,6 +160,8 @@ def main():
         item_name, price = selected_item
         print(f"Selected: {item_name} - ${price}")
 
+        quantity = get_quantity()
+        print(f"Quantity selected: {quantity}")
 
 if __name__ == "__main__":
     main()
