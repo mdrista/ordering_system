@@ -125,13 +125,13 @@ def get_quantity():
     """Gets and validates the quantity of an item."""
 
     while True:
-        quantity = input("Enter quantity: ").strip()
+        quantity = input("Enter quantity (1-100): ").strip()
 
         # Check that the quantity is a positive whole number
-        if quantity.isdigit() and int(quantity) > 0:
+        if quantity.isdigit() and 1 <= int(quantity) <= 100:
             return int(quantity)
 
-        print("Error: Please enter a positive whole number.")
+        print("Error: Please enter a number between 1 and 100.")
 
 
 
@@ -167,9 +167,8 @@ def display_cart(shopping_cart):
         quantity = details["quantity"]
         line_total = price * quantity
 
-        print(
-            f"{item_name} - ${price} x {quantity} = ${line_total}"
-        )
+        print(f"{item_name} - ${price} x {quantity} = ${line_total}")
+        
         print(f"Total items in cart: {sum(item['quantity'] for item in shopping_cart.values())}")
     print(f"Total cost: ${sum(item['price'] * item['quantity'] for item in shopping_cart.values())} (excluding GST)")
 
@@ -226,7 +225,6 @@ def checkout(shopping_cart, customer_name):
     return final_total
 
 
-
 def confirm_order():
     """Asks the customer to confirm their order."""
 
@@ -257,7 +255,11 @@ def main():
 
         # Quit if the customer chooses Q
         if selected_category is None:
-            print("Order cancelled.")
+            if shopping_cart:
+                print("Order cancelled. Your cart has been cleared.")
+                shopping_cart.clear()
+            else:
+                print("Goodbye.")
             return
 
         display_items(selected_category)
