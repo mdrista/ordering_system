@@ -191,6 +191,41 @@ def select_order_action():
         print("Error: Please enter 1, 2 or 3.")
 
 
+
+def checkout(shopping_cart, customer_name):
+    """Calculates the order total and displays an order summary."""
+
+    subtotal = 0
+
+    print("\n========== ORDER SUMMARY ==========")
+    print(f"Customer: {customer_name}")
+    print("-----------------------------------")
+
+    # Calculate each product's line total
+    for item_name, details in shopping_cart.items():
+        price = details["price"]
+        quantity = details["quantity"]
+        line_total = price * quantity
+
+        subtotal += line_total
+
+        print(
+            f"{item_name}: {quantity} x ${price} = ${line_total:.2f}"
+        )
+
+    # Calculate GST and final total
+    gst = subtotal * 0.15
+    final_total = subtotal + gst
+
+    print("-----------------------------------")
+    print(f"Subtotal: ${subtotal:.2f}")
+    print(f"GST (15%): ${gst:.2f}")
+    print(f"Final total: ${final_total:.2f}")
+    print("===================================")
+
+    return final_total
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -229,7 +264,11 @@ def main():
             continue
 
         elif order_action == "2":
-            print("_____Checkout_____.")
+            if not shopping_cart:
+                print("Your shopping cart is empty. Please select a product first.")
+                continue
+
+            final_total = checkout(shopping_cart, customer_name)
             return
 
         elif order_action == "3":
