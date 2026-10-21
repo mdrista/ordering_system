@@ -134,6 +134,46 @@ def get_quantity():
         print("Error: Please enter a positive whole number.")
 
 
+
+def add_to_cart(shopping_cart, item_name, price, quantity):
+    """Adds an item to the shopping cart."""
+
+    if item_name in shopping_cart:
+        # Increase the quantity if the item is already in the cart
+        shopping_cart[item_name]["quantity"] += quantity
+
+    else:
+        # Store the item, price and quantity in the cart
+        shopping_cart[item_name] = {
+            "price": price,
+            "quantity": quantity
+        }
+
+    print(f"Added {quantity} x {item_name} to your cart.")
+
+
+
+def display_cart(shopping_cart):
+    """Displays all items currently in the shopping cart."""
+
+    print("\nShopping Cart")
+
+    if not shopping_cart:
+        print("Your cart is empty.")
+        return
+
+    for item_name, details in shopping_cart.items():
+        price = details["price"]
+        quantity = details["quantity"]
+        line_total = price * quantity
+
+        print(
+            f"{item_name} - ${price} x {quantity} = ${line_total}"
+        )
+        print(f"Total items in cart: {sum(item['quantity'] for item in shopping_cart.values())}")
+    print(f"Total cost: ${sum(item['price'] * item['quantity'] for item in shopping_cart.values())} (excluding GST)")
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -162,6 +202,9 @@ def main():
 
         quantity = get_quantity()
         print(f"Quantity selected: {quantity}")
+
+        add_to_cart(shopping_cart, item_name, price, quantity)
+        display_cart(shopping_cart)
 
 if __name__ == "__main__":
     main()
