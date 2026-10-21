@@ -174,6 +174,23 @@ def display_cart(shopping_cart):
     print(f"Total cost: ${sum(item['price'] * item['quantity'] for item in shopping_cart.values())} (excluding GST)")
 
 
+def select_order_action():
+    """Asks the customer what they want to do next."""
+
+    print("\nWhat would you like to do?")
+    print("1. Continue shopping")
+    print("2. Checkout")
+    print("3. Cancel order")
+
+    while True:
+        choice = input("Select an option (1-3): ").strip()
+
+        if choice in ["1", "2", "3"]:
+            return choice
+
+        print("Error: Please enter 1, 2 or 3.")
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -205,6 +222,20 @@ def main():
 
         add_to_cart(shopping_cart, item_name, price, quantity)
         display_cart(shopping_cart)
+
+        order_action = select_order_action()
+
+        if order_action == "1":
+            continue
+
+        elif order_action == "2":
+            print("_____Checkout_____.")
+            return
+
+        elif order_action == "3":
+            shopping_cart.clear()
+            print("Order cancelled.")
+            return
 
 if __name__ == "__main__":
     main()
