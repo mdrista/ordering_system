@@ -127,7 +127,7 @@ def get_quantity():
     while True:
         quantity = input("Enter quantity (1-100): ").strip()
 
-        # Check that the quantity is a positive whole number
+        # Check that the quantity is a positive number between 1 and 100.
         if quantity.isdigit() and 1 <= int(quantity) <= 100:
             return int(quantity)
 
@@ -143,7 +143,7 @@ def add_to_cart(shopping_cart, item_name, price, quantity):
         shopping_cart[item_name]["quantity"] += quantity
 
     else:
-        # Store the item, price and quantity in the cart
+        # Dictionary to store the item, price and quantity in the cart
         shopping_cart[item_name] = {
             "price": price,
             "quantity": quantity
@@ -162,13 +162,15 @@ def display_cart(shopping_cart):
         print("Your cart is empty.")
         return
 
+    # Calculate and display each item's line total and the overall total cost
     for item_name, details in shopping_cart.items():
         price = details["price"]
         quantity = details["quantity"]
         line_total = price * quantity
 
         print(f"{item_name} - ${price} x {quantity} = ${line_total}")
-        
+
+        # Provide a total summary of the items and total cost
         print(f"Total items in cart: {sum(item['quantity'] for item in shopping_cart.values())}")
     print(f"Total cost: ${sum(item['price'] * item['quantity'] for item in shopping_cart.values())} (excluding GST)")
 
@@ -184,6 +186,7 @@ def select_order_action():
     while True:
         choice = input("Select an option (1-3): ").strip()
 
+        # Ensures that user input is valid and within allowed range.
         if choice in ["1", "2", "3"]:
             return choice
 
@@ -196,6 +199,7 @@ def checkout(shopping_cart, customer_name):
 
     subtotal = 0
 
+    # Fancy formatting for the order summary to make it look like a real reciept.
     print("\n========== ORDER SUMMARY ==========")
     print(f"Customer: {customer_name}")
     print("-----------------------------------")
@@ -233,6 +237,7 @@ def confirm_order():
             "\nWould you like to confirm your order? (Y/N): "
         ).strip().upper()
 
+        # If/elif loop to ensure inputs are validated and only Y or N are accepted.
         if confirmation == "Y":
             return True
 
@@ -241,7 +246,7 @@ def confirm_order():
 
         print("Error: Please enter Y or N.")
 
-
+# Main function to run the program and call all other functions in a logical order.
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -269,12 +274,14 @@ def main():
         if selected_item is None:
             continue
 
+        # Tells user the item and price they selected.
         item_name, price = selected_item
         print(f"Selected: {item_name} - ${price}")
 
         quantity = get_quantity()
         print(f"Quantity selected: {quantity}")
 
+        # Adds item, quantity, and price to the shopping cart and displays the current cart information.
         add_to_cart(shopping_cart, item_name, price, quantity)
         display_cart(shopping_cart)
 
@@ -300,11 +307,12 @@ def main():
                 print("\nReturning to shopping...")
                 continue
 
-
+        #Clears shopping cart and cancels order if user requests.
         elif order_action == "3":
             shopping_cart.clear()
             print("Order cancelled.")
             return
 
+# Run the main function when the script is executed directly.
 if __name__ == "__main__":
     main()
