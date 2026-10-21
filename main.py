@@ -226,6 +226,24 @@ def checkout(shopping_cart, customer_name):
     return final_total
 
 
+
+def confirm_order():
+    """Asks the customer to confirm their order."""
+
+    while True:
+        confirmation = input(
+            "\nWould you like to confirm your order? (Y/N): "
+        ).strip().upper()
+
+        if confirmation == "Y":
+            return True
+
+        elif confirmation == "N":
+            return False
+
+        print("Error: Please enter Y or N.")
+
+
 def main():
     """Function to run all other functions in the program."""
     print("Sports Ordering System")
@@ -268,8 +286,18 @@ def main():
                 print("Your shopping cart is empty. Please select a product first.")
                 continue
 
-            final_total = checkout(shopping_cart, customer_name)
-            return
+            checkout(shopping_cart, customer_name)
+            confirmed = confirm_order()
+
+            if confirmed:
+                print("\nOrder confirmed!")
+                print(f"Thank you for your order, {customer_name}.")
+                print("Your order has been completed.")
+                return
+            else:
+                print("\nReturning to shopping...")
+                continue
+
 
         elif order_action == "3":
             shopping_cart.clear()
